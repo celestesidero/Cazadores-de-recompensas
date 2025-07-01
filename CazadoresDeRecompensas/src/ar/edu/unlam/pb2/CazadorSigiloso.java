@@ -1,5 +1,5 @@
 package ar.edu.unlam.pb2;
 
-public class CazadorSigiloso {
+public class CazadorSigiloso extends Cazador{
 
 }
