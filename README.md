@@ -11,7 +11,7 @@ Prófugos que pueden evolucionar.
 
 Una agencia que gestiona cazadores.
 
-#✨ Temas trabajados
+✨ Temas trabajados
 
 ✅ Test-Driven Development (TDD)
 
