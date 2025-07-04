@@ -36,4 +36,8 @@ public class Zona {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+	
+	public Set<Profugo> getProfugos() {
+		return profugos;
+	}
 }
