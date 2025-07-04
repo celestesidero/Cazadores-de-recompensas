@@ -26,6 +26,10 @@ public abstract class Cazador {
 		this.intimidarProfugo(profugo);
 	}
 
+	public String getNombre() {
+		return nombre;
+	}
+
 	public abstract Boolean cumpleCondicionEspecificaDeCaptura(Profugo profugo);
 
 	public abstract void intimidarProfugo(Profugo profugo);
