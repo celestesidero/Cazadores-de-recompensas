@@ -1,14 +1,53 @@
 package ar.edu.unlam.pb2.test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
-
-import ar.edu.unlam.pb2.CazadorRural;
-import ar.edu.unlam.pb2.CazadorSigiloso;
-import ar.edu.unlam.pb2.CazadorUrbano;
+import ar.edu.unlam.pb2.*;
+import ar.edu.unlam.pb2.Profugo;
+import ar.edu.unlam.pb2.ennum.*;
 
 public class CazadorTest {
+	
+	@Test
+	public void queUnCazadorLogreIntimidarAlProfugoYPuedaHacerBajarSuNivelDeInocenciaEn2Unidades() {
+		Cazador cazadorRural = new CazadorRural("Pepe", 70);
+		Profugo profugo = new Profugo(30, 40, false, Entrenamiento.ARTES_MARCIALES); 
+		cazadorRural.ejecutarIntimidacionTotal(profugo);
+		Integer valorEsperado = 28;
+		Integer valorObtenido = profugo.getNivelInocencia();
+		assertEquals(valorEsperado, valorObtenido); 
+	}
+	
+	@Test
+	public void queElCazadorSigilosoLogreIntimidarAlProfugoYPuedaReducirSuHabilidad() {
+		Cazador cazadorSigiloso = new CazadorSigiloso("Fernando", 50);
+		Profugo profugo = new Profugo(30, 40, false, Entrenamiento.ARTES_MARCIALES); 
+		cazadorSigiloso.ejecutarIntimidacionTotal(profugo);
+		Integer valorEsperado = 35;
+		Integer valorObtenido = profugo.getNivelHabilidad();
+		assertEquals(valorEsperado, valorObtenido); 
+	}
+	
+	@Test
+	public void queElCazadorUrbanoLogreIntimidarAlProfugoYPuedaHacerQueDejeDeSerNervioso() {
+		Cazador cazadorUrbano = new CazadorUrbano("Raul", 50);
+		Profugo profugo = new Profugo(30, 40, true, Entrenamiento.ELITE); 
+		cazadorUrbano.ejecutarIntimidacionTotal(profugo);
+		Boolean valorEsperado = false;
+		Boolean valorObtenido = profugo.getEsNervioso();
+		assertEquals(valorEsperado, valorObtenido); 
+	}
+	
+	@Test
+	public void queElCazadorRuralLogreIntimidarAlProfugoYPuedaHacerQueEmpieceASerNervioso() {
+		Cazador cazadorRural = new CazadorRural("Raul", 60);
+		Profugo profugo = new Profugo(30, 40, false, Entrenamiento.ELITE); 
+		cazadorRural.ejecutarIntimidacionTotal(profugo);
+		Boolean valorEsperado = true;
+		Boolean valorObtenido = profugo.getEsNervioso();
+		assertEquals(valorEsperado, valorObtenido); 
+	}
 
 	@Test
 	public void queElCazadorUrbanoSeaEspecialistaEnEntornosCiviles() {
