@@ -65,9 +65,9 @@ public class CazadorTest {
 	public void queElCazadorSiHay3ProfugosPuedaCazarA2EIntimidarA1() {
 		Cazador cazador = new CazadorSigiloso("Sombra", 70);
 
-		Profugo profugo1 = new Profugo("Elias",40, 30, false); // Captura
-		Profugo profugo2 = new Profugo("pepito",60, 40, false); // Captura
-		Profugo profugo3 = new Profugo("pedro",80, 50, false); // No captura
+		Profugo profugo1 = new Profugo("Elias",40, 30, false); 
+		Profugo profugo2 = new Profugo("pepito",60, 40, false); 
+		Profugo profugo3 = new Profugo("pedro",80, 50, false); 
 
 		Zona zona = new Zona("Ciudad");
 		zona.agregarProfugos(profugo1);
@@ -76,8 +76,8 @@ public class CazadorTest {
 
 		boolean resultado = cazador.procesoDeCaptura(zona);
 
-		assertEquals(1, zona.getProfugos().size()); // Queda 1 prófugo sin capturar
-		assertTrue(resultado); // Capturó al menos uno (capturó 2)
+		assertEquals(1, zona.getProfugos().size()); 
+		assertTrue(resultado); 
 	}
 
 	@Test
