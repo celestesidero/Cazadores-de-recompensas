@@ -22,6 +22,10 @@ public abstract class Cazador {
 		this.agencia = agencia;
 	}
 
+	public String getNombre() {
+		return nombre;
+	}
+
 	public Boolean procesoDeCaptura(Zona zona) {
 		Set<Profugo> profugosEnLaZona = zona.getProfugos();
 		Set<Profugo> profugosCapturados = new HashSet<>();
