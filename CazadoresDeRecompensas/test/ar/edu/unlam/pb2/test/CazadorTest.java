@@ -8,45 +8,109 @@ import ar.edu.unlam.pb2.Profugo;
 import ar.edu.unlam.pb2.ennum.*;
 
 public class CazadorTest {
-	
+
 	@Test
 	public void queUnCazadorLogreIntimidarAlProfugoYPuedaHacerBajarSuNivelDeInocenciaEn2Unidades() {
 		Cazador cazadorRural = new CazadorRural("Pepe", 70);
-		Profugo profugo = new Profugo(30, 40, false, Entrenamiento.ARTES_MARCIALES); 
+		Profugo profugo = new Profugo(30, 40, false);
 		cazadorRural.ejecutarIntimidacionTotal(profugo);
 		Integer valorEsperado = 28;
 		Integer valorObtenido = profugo.getNivelInocencia();
-		assertEquals(valorEsperado, valorObtenido); 
+		assertEquals(valorEsperado, valorObtenido);
 	}
-	
+
 	@Test
 	public void queElCazadorSigilosoLogreIntimidarAlProfugoYPuedaReducirSuHabilidad() {
 		Cazador cazadorSigiloso = new CazadorSigiloso("Fernando", 50);
-		Profugo profugo = new Profugo(30, 40, false, Entrenamiento.ARTES_MARCIALES); 
+		Profugo profugo = new Profugo(30, 40, false);
 		cazadorSigiloso.ejecutarIntimidacionTotal(profugo);
 		Integer valorEsperado = 35;
 		Integer valorObtenido = profugo.getNivelHabilidad();
-		assertEquals(valorEsperado, valorObtenido); 
+		assertEquals(valorEsperado, valorObtenido);
 	}
-	
+
 	@Test
 	public void queElCazadorUrbanoLogreIntimidarAlProfugoYPuedaHacerQueDejeDeSerNervioso() {
 		Cazador cazadorUrbano = new CazadorUrbano("Raul", 50);
-		Profugo profugo = new Profugo(30, 40, true, Entrenamiento.ELITE); 
+		Profugo profugo = new Profugo(30, 40, true);
 		cazadorUrbano.ejecutarIntimidacionTotal(profugo);
 		Boolean valorEsperado = false;
 		Boolean valorObtenido = profugo.getEsNervioso();
-		assertEquals(valorEsperado, valorObtenido); 
+		assertEquals(valorEsperado, valorObtenido);
 	}
-	
+
 	@Test
 	public void queElCazadorRuralLogreIntimidarAlProfugoYPuedaHacerQueEmpieceASerNervioso() {
 		Cazador cazadorRural = new CazadorRural("Raul", 60);
-		Profugo profugo = new Profugo(30, 40, false, Entrenamiento.ELITE); 
+		Profugo profugo = new Profugo(30, 40, false);
 		cazadorRural.ejecutarIntimidacionTotal(profugo);
 		Boolean valorEsperado = true;
 		Boolean valorObtenido = profugo.getEsNervioso();
-		assertEquals(valorEsperado, valorObtenido); 
+		assertEquals(valorEsperado, valorObtenido);
+	}
+
+	@Test
+	public void queElCazadorSigilosoPuedaCapturarAUnProfugoCorrectamente() {
+		Cazador cazadorSigiloso = new CazadorSigiloso("Casandra", 70);
+		Profugo profugo = new Profugo(40, 40, false);
+		Zona zona = new Zona("Ciudad");
+		zona.agregarProfugos(profugo);
+
+		boolean capturo = cazadorSigiloso.procesoDeCaptura(zona);
+
+		assertTrue(capturo);
+	}
+
+	@Test
+	public void queElCazadorSiHay3ProfugosPuedaCazarA2EIntimidarA1() {
+		Cazador cazador = new CazadorSigiloso("Sombra", 70);
+
+		Profugo profugo1 = new Profugo(40, 30, false); // Captura
+		Profugo profugo2 = new Profugo(60, 40, false); // Captura
+		Profugo profugo3 = new Profugo(80, 50, false); // No captura
+
+		Zona zona = new Zona("Ciudad");
+		zona.agregarProfugos(profugo1);
+		zona.agregarProfugos(profugo2);
+		zona.agregarProfugos(profugo3);
+
+		boolean resultado = cazador.procesoDeCaptura(zona);
+
+		assertEquals(1, zona.getProfugos().size()); // Queda 1 prófugo sin capturar
+		assertTrue(resultado); // Capturó al menos uno (capturó 2)
+	}
+
+	@Test
+	public void queSiElCazadorLograCapturarAUnProfugoSeLeAumenteLaExperiencia() {
+		Cazador cazadorRural = new CazadorRural("Cesar", 90);
+		Profugo profugo = new Profugo(50, 20, true);
+		Zona zona = new Zona("Campo");
+		zona.agregarProfugos(profugo);
+
+		boolean capturado = cazadorRural.procesoDeCaptura(zona);
+
+		assertTrue(capturado);
+		assertTrue(cazadorRural.getCantidadDeExperiencia() > 90);
+	}
+
+	@Test
+	public void queElCazadorNoCaptureSiNoCumpleCondicionEspecificaPeroSiLaCondicionGeneral() {
+		Cazador cazadorUrbano = new CazadorUrbano("Santiago", 80);
+		Profugo profugo = new Profugo(30, 40, true);
+		Zona zona = new Zona("San justo");
+		zona.agregarProfugos(profugo);
+		boolean capturado = cazadorUrbano.procesoDeCaptura(zona);
+		assertFalse(capturado);
+	}
+
+	@Test
+	public void queElCazadorNoCaptureSiNoCumpleCondicionGeneralPeroSiLaCondicionEspecifica() {
+		Cazador cazadorUrbano = new CazadorUrbano("Hernan", 10);
+		Profugo profugo = new Profugo(30, 40, false);
+		Zona zona = new Zona("Ramos mejia");
+		zona.agregarProfugos(profugo);
+		boolean capturado = cazadorUrbano.procesoDeCaptura(zona);
+		assertFalse(capturado);
 	}
 
 	@Test
@@ -70,24 +134,14 @@ public class CazadorTest {
 		assertEquals(especialidadEsperada, cazadorSigiloso.getEspecialidad());
 	}
 
-	@Test
+	@Test(expected = IllegalArgumentException.class)
 	public void queLanceUnaExcepcionSiLaExperienciaQueSeIngresaAlCazadorEsNula() {
-		try {
-			new CazadorSigiloso("Roberto", null);
-		} catch (IllegalArgumentException e) {
-			String mensajeEsperado = "El valor que se ingreso no es valido. Debe ser un numero positivo";
-			assertEquals(mensajeEsperado, e.getMessage());
-		}
+		new CazadorSigiloso("Roberto", null);
 	}
 
-	@Test
+	@Test(expected = IllegalArgumentException.class)
 	public void queLanceUnaExcepcionSiLaExperienciaQueSeIngresaAlCazadorEsNegativa() {
-		try {
-			new CazadorSigiloso("Alberto", -1);
-		} catch (IllegalArgumentException e) {
-			String mensajeEsperado = "El valor que se ingreso no es valido. Debe ser un numero positivo";
-			assertEquals(mensajeEsperado, e.getMessage());
-		}
+		new CazadorSigiloso("Roberto", -1);
 	}
 
 }
