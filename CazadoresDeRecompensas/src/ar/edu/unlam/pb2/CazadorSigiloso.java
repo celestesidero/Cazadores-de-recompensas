@@ -15,7 +15,7 @@ public class CazadorSigiloso extends Cazador {
 
 	@Override
 	public void intimidarProfugo(Profugo profugo) {
-		profugo.setNivelHabilidad(profugo.getNivelHabilidad() - 5);
+		profugo.setNivelDeHabilidad(profugo.getNivelHabilidad() - 5);
 	}
 
 }

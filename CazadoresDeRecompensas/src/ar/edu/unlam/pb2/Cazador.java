@@ -49,7 +49,7 @@ public abstract class Cazador {
 	}
 
 	public void ejecutarIntimidacionTotal(Profugo profugo) {
-		profugo.setNivelInocencia(profugo.getNivelInocencia() - 2);
+		profugo.setNivelDeInocencia(profugo.getNivelInocencia() - 2);
 		this.intimidarProfugo(profugo);
 	}
 

@@ -12,7 +12,7 @@ public class CazadorTest {
 	@Test
 	public void queUnCazadorLogreIntimidarAlProfugoYPuedaHacerBajarSuNivelDeInocenciaEn2Unidades() {
 		Cazador cazadorRural = new CazadorRural("Pepe", 70);
-		Profugo profugo = new Profugo(30, 40, false);
+		Profugo profugo = new Profugo("Pepito",30, 40, false);
 		cazadorRural.ejecutarIntimidacionTotal(profugo);
 		Integer valorEsperado = 28;
 		Integer valorObtenido = profugo.getNivelInocencia();
@@ -22,7 +22,7 @@ public class CazadorTest {
 	@Test
 	public void queElCazadorSigilosoLogreIntimidarAlProfugoYPuedaReducirSuHabilidad() {
 		Cazador cazadorSigiloso = new CazadorSigiloso("Fernando", 50);
-		Profugo profugo = new Profugo(30, 40, false);
+		Profugo profugo = new Profugo("Carlo",30, 40, false);
 		cazadorSigiloso.ejecutarIntimidacionTotal(profugo);
 		Integer valorEsperado = 35;
 		Integer valorObtenido = profugo.getNivelHabilidad();
@@ -32,7 +32,7 @@ public class CazadorTest {
 	@Test
 	public void queElCazadorUrbanoLogreIntimidarAlProfugoYPuedaHacerQueDejeDeSerNervioso() {
 		Cazador cazadorUrbano = new CazadorUrbano("Raul", 50);
-		Profugo profugo = new Profugo(30, 40, true);
+		Profugo profugo = new Profugo("Brayan",30, 40, true);
 		cazadorUrbano.ejecutarIntimidacionTotal(profugo);
 		Boolean valorEsperado = false;
 		Boolean valorObtenido = profugo.getEsNervioso();
@@ -42,7 +42,7 @@ public class CazadorTest {
 	@Test
 	public void queElCazadorRuralLogreIntimidarAlProfugoYPuedaHacerQueEmpieceASerNervioso() {
 		Cazador cazadorRural = new CazadorRural("Raul", 60);
-		Profugo profugo = new Profugo(30, 40, false);
+		Profugo profugo = new Profugo("Pedro",30, 40, false);
 		cazadorRural.ejecutarIntimidacionTotal(profugo);
 		Boolean valorEsperado = true;
 		Boolean valorObtenido = profugo.getEsNervioso();
@@ -52,7 +52,7 @@ public class CazadorTest {
 	@Test
 	public void queElCazadorSigilosoPuedaCapturarAUnProfugoCorrectamente() {
 		Cazador cazadorSigiloso = new CazadorSigiloso("Casandra", 70);
-		Profugo profugo = new Profugo(40, 40, false);
+		Profugo profugo = new Profugo("Juan",40, 40, false);
 		Zona zona = new Zona("Ciudad");
 		zona.agregarProfugos(profugo);
 
@@ -65,9 +65,9 @@ public class CazadorTest {
 	public void queElCazadorSiHay3ProfugosPuedaCazarA2EIntimidarA1() {
 		Cazador cazador = new CazadorSigiloso("Sombra", 70);
 
-		Profugo profugo1 = new Profugo(40, 30, false); // Captura
-		Profugo profugo2 = new Profugo(60, 40, false); // Captura
-		Profugo profugo3 = new Profugo(80, 50, false); // No captura
+		Profugo profugo1 = new Profugo("Elias",40, 30, false); // Captura
+		Profugo profugo2 = new Profugo("pepito",60, 40, false); // Captura
+		Profugo profugo3 = new Profugo("pedro",80, 50, false); // No captura
 
 		Zona zona = new Zona("Ciudad");
 		zona.agregarProfugos(profugo1);
@@ -83,7 +83,7 @@ public class CazadorTest {
 	@Test
 	public void queSiElCazadorLograCapturarAUnProfugoSeLeAumenteLaExperiencia() {
 		Cazador cazadorRural = new CazadorRural("Cesar", 90);
-		Profugo profugo = new Profugo(50, 20, true);
+		Profugo profugo = new Profugo("pedro",50, 20, true);
 		Zona zona = new Zona("Campo");
 		zona.agregarProfugos(profugo);
 
@@ -96,7 +96,7 @@ public class CazadorTest {
 	@Test
 	public void queElCazadorNoCaptureSiNoCumpleCondicionEspecificaPeroSiLaCondicionGeneral() {
 		Cazador cazadorUrbano = new CazadorUrbano("Santiago", 80);
-		Profugo profugo = new Profugo(30, 40, true);
+		Profugo profugo = new Profugo("pedro",30, 40, true);
 		Zona zona = new Zona("San justo");
 		zona.agregarProfugos(profugo);
 		boolean capturado = cazadorUrbano.procesoDeCaptura(zona);
@@ -106,7 +106,7 @@ public class CazadorTest {
 	@Test
 	public void queElCazadorNoCaptureSiNoCumpleCondicionGeneralPeroSiLaCondicionEspecifica() {
 		Cazador cazadorUrbano = new CazadorUrbano("Hernan", 10);
-		Profugo profugo = new Profugo(30, 40, false);
+		Profugo profugo = new Profugo("pedro",30, 40, false);
 		Zona zona = new Zona("Ramos mejia");
 		zona.agregarProfugos(profugo);
 		boolean capturado = cazadorUrbano.procesoDeCaptura(zona);
